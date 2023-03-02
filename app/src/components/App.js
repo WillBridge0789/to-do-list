@@ -59,22 +59,22 @@ function App() {
                 </div>
             </div>
             <div className="row">
-                <div className="col d-flex justify-content-center bg-secondary">
+                <div className="col d-flex justify-content-center bg-light">
                     <h2>You have {count} thing/s on your list!</h2>
                 </div>
             </div>
             <div className="row d-flex">
                 <div className="col d-flex justify-content-center bg-light">
                     <input type="text"  className="task-input" value={input} onChange={inputChange}></input>
-                    <button onClick={handleClick}>Add</button>
+                    <button type="button" className="btn btn-primary" onClick={handleClick}>Add</button>
                 </div>
             </div>
             {todos.map((todo, i) => {
                 return (
                     <div key={todo} className="row">
-                        <div className="col d-flex justify-content-center bg-light">
-                            <ul className="list-group">
-                                <li className="list-group-item">
+                        <div className="col d-flex justify-content-center bg-secondary">
+                            <ul className="list-group m-3 w-100">
+                                <li className="list-group-item list-group-item-light">
                                     <input type="checkbox" checked={!active[i]} onClick={()=>handleCheck(i)} />
                                     {todo}
                                     {/* make a delete button */}
@@ -88,9 +88,9 @@ function App() {
             }
             <div className="row d-flex justify-content-center">
                 <div className="col d-flex justify-content-center bg-light">
-                    <button type="button" onClick={handleDisplay}>All</button>
-                    <button type="button" onClick={handleDisplay}>Completed</button>
-                    <button type="button" onClick={deleteList}>Delete</button>
+                    <button type="button" className="btn btn-primary" onClick={handleDisplay}>All</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleDisplay}>Completed</button>
+                    <button type="button" className="btn btn-danger" onClick={deleteList}>Delete</button>
                 </div>
             </div>
         </div>
