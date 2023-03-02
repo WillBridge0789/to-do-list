@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Header from "./Header";
+import Todo from "./Todo";
 //import Input from "./Input";
 
 function App() {
     const [todo, setTodo] = useState([])
     const [count, setCount] = useState(todo.length);
     const [input, setInput] = useState('');
-    
+
     function inputChange(event) {
         setInput(event.target.value);
     }
@@ -33,19 +34,15 @@ function App() {
                 <div className="col d-flex justify-content-center bg-light">
                     <input type="text" placeholder="Add to List" onChange={inputChange}></input>
                     <button onClick={handleClick}>Add</button>
-                </div> 
-            </div>
-            <div className="row">
-                <div className="col d-flex justify-content-center bg-light">
-                    <ul>
-                        {todo.map(listIt => {
-                            return (
-                                <li key={listIt}>{listIt}</li>
-                            )
-                        })}
-                    </ul>
                 </div>
             </div>
+            {todo.map(listIt => {
+                return (
+                    <Todo key={listIt} listIt={listIt} />
+                )
+              })
+            }
+
         </div>
     )
 }
