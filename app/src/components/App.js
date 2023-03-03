@@ -8,6 +8,8 @@ function App() {
     const [count, setCount] = useState(todos.length);
     const [input, setInput] = useState('');
     const [active, setActive] = useState([]);
+    const [view, SetView] = useState([]);
+    
     let displayList = handleDisplay();
 
     function inputChange(event) {
@@ -47,9 +49,14 @@ function App() {
         return displayList;
     }
 
+    function handleView() {
+        let altView = [];
+    }
+
     function deleteList() {
         
     }
+    
     console.log(displayList);
     return (
         <div className="container">
