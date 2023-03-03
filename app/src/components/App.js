@@ -1,20 +1,15 @@
 import { useState } from "react";
 import Header from "./Header";
-import Todo from "./Todo";
-//import Input from "./Input";
 
 function App() {
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState([]);
     const [count, setCount] = useState(todos.length);
     const [input, setInput] = useState('');
     const [active, setActive] = useState([]);
-    const [view, SetView] = useState([]);
-    
-    let displayList = handleDisplay();
+    const [view, setView] = useState('all');
 
     function inputChange(event) {
         setInput(event.target.value);
-
     }
 
     function handleClick() {
@@ -37,26 +32,29 @@ function App() {
         setActive([...active]);
     }
 
-    function handleDisplay() {
-        let displayList = [];
-        displayList = todos.filter(todo => {
-            if (todo.active) {
-               return displayList.push(todo);
-            } else {
-                return displayList.push(todo);    
-            }        
-        })
-        return displayList;
+    let displayList = todos;
+    let activeList = active;
+    if (view === 'completed') {
+        displayList = todos.filter((item, i) => active[i] === false);
+        activeList = active.filter((item, i) => item === false);
     }
-
-    function handleView() {
-        let altView = [];
+    else if (view === 'active') {
+        displayList = todos.filter((item, i) => active[i] === true);
+        activeList = active.filter((item, i) => item === true);
+    } else {
+        displayList = todos;
     }
 
     function deleteList() {
-        
+       let arr = [];
+       setTodos(arr);
+       setActive(arr);
+       setCount(0);
+       /* for (let i = 0; i < todos.length; i++) {
+            removeItem(todos[i]);        
+       }*/
     }
-    
+
     console.log(displayList);
     return (
         <div className="container">
@@ -67,25 +65,24 @@ function App() {
             </div>
             <div className="row">
                 <div className="col d-flex justify-content-center bg-light">
-                    <h2>You have {count} thing/s on your list!</h2>
+                    <h2>You have {count} total thing/s on your list!</h2>
                 </div>
             </div>
             <div className="row d-flex">
                 <div className="col d-flex justify-content-center bg-light">
-                    <input type="text"  className="task-input" value={input} onChange={inputChange}></input>
+                    <input type="text" className="task-input" value={input} onChange={inputChange}></input>
                     <button type="button" className="btn btn-primary" onClick={handleClick}>Add</button>
                 </div>
             </div>
-            {todos.map((todo, i) => {
+            {displayList.map((todo, i) => {
                 return (
                     <div key={todo} className="row">
-                        <div className="col d-flex justify-content-center bg-secondary">
+                        <div className="col d-flex justify-content-center bg-info">
                             <ul className="list-group m-3 w-100">
-                                <li className="list-group-item list-group-item-light">
-                                    <input type="checkbox" checked={!active[i]} onClick={()=>handleCheck(i)} />
+                                <li className="d-flex list-group-item list-group-item-light">
+                                    <input type="checkbox" checked={!activeList[i]} onChange={() => handleCheck(i)} />
                                     {todo}
-                                    {/* make a delete button */}
-                                    <button onClick={()=>removeItem(todo)}>X</button>
+                                    <button className="btn btn-danger" onClick={() => removeItem(todo)}>X</button>
                                 </li>
                             </ul>
                         </div>
@@ -95,8 +92,9 @@ function App() {
             }
             <div className="row d-flex justify-content-center">
                 <div className="col d-flex justify-content-center bg-light">
-                    <button type="button" className="btn btn-primary" onClick={handleDisplay}>All</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleDisplay}>Completed</button>
+                    <button type="button" className="btn btn-primary" onClick={() => setView('all')}>All</button>
+                    <button type="button" className="btn btn-primary" onClick={() => setView('active')}>Active</button>
+                    <button type="button" className="btn btn-success" onClick={() => setView('completed')}>Completed</button>
                     <button type="button" className="btn btn-danger" onClick={deleteList}>Delete</button>
                 </div>
             </div>
