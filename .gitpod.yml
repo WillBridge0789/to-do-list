@@ -1,6 +1,0 @@
-image:
-  file: .devcontainer/Dockerfile
-
-tasks:
-  - init: bash .devcontainer/onCreateCommand.sh
-    command: bash .devcontainer/postStartCommand.sh && bash && exit
